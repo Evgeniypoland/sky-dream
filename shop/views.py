@@ -60,6 +60,8 @@ class GoodInfoView(DataMixin, DetailView, FormView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
+        if self.request.user.is_anonymous:
+            return redirect('shop_profile')
         quantity = form.cleaned_data['quantity']
         good_slug = self.kwargs['good']
         good = Goods.objects.get(slug=good_slug)
