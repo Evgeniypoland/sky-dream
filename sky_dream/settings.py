@@ -99,19 +99,29 @@ WSGI_APPLICATION = 'sky_dream.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('POSTGRES_HOST', 'ec2-54-78-142-10.eu-west-1.compute.amazonaws.com'),
-        'NAME': os.environ.get('POSTGRES_DB', 'd34en4n1lmaes4'),
-        'USER': os.environ.get('POSTGRES_USER', 'fftfznaxwzskqc'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '41a776f17cf57980a39a08b332c7662ab6ef6d8f3d6aa02b0ccfa6d45d685db0'),
-        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': os.environ.get('POSTGRES_HOST', 'ec2-54-78-142-10.eu-west-1.compute.amazonaws.com'),
+#         'NAME': os.environ.get('POSTGRES_DB', 'd34en4n1lmaes4'),
+#         'USER': os.environ.get('POSTGRES_USER', 'fftfznaxwzskqc'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '41a776f17cf57980a39a08b332c7662ab6ef6d8f3d6aa02b0ccfa6d45d685db0'),
+#         'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+#
+#     }
+# }
 
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
+
+DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
     }
-}
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
