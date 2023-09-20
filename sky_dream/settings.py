@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-o$g@+^(13kk@w4lkn7-+$
 # DEBUG = True
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = ['https://sky-dream-b391b5c765a7.herokuapp.com/', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['sky-dream-b391b5c765a7.herokuapp.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
