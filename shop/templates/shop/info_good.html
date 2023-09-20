@@ -1,0 +1,35 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Info{% endblock %}
+
+{% block css_additional %}
+<link rel="stylesheet" href="{% static 'shop/css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="leftcolumn">
+        <b>{{good.name}}</b> <br><br>
+        Description:
+        <pre>{{good.description}}</pre>
+        <br><br>
+        {% if good.sales.new_price %}
+            Price: <del>{{good.price}}</del> <ins style="color:red">{{good.sales.new_price}}{{good.currency}}</ins><br><br>
+        {% else %}
+            Price: {{good.price}}{{good.currency}}<br><br>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">add</button>
+            <a href="{% url 'shop_cart' %}"><button type="button">cart</button></a>
+        </form>
+    </div>
+    <div class="rightcolumn">
+        <img src="{{good.image.url}}" >
+    </div>
+</div>
+
+{% include 'includes/sales.html' %}
+{% endblock %}

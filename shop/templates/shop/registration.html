@@ -1,0 +1,23 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Registration{% endblock %}
+
+{% block css_additional %}
+<link rel="stylesheet" href="{% static 'shop/css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Registration form</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-style {% if field.errors %} errors {% endif %}">
+            {{field.label_tag}}
+            {{field.errors}}
+            {{field}}
+        </div>
+        {% endfor %}
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Log in{% endblock %}
+
+{% block css_additional %}
+<link rel="stylesheet" href="{% static 'shop/css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Log in</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-error">{{ form.non_field_errors }}</div>
+        {% for field in form %}
+        <div class="form-style {% if field.errors %} errors {% endif %}">
+            {{field.label_tag}}
+            {{field.errors}}
+            {{field}}
+        </div>
+        {% endfor %}
+        <button>log in</button>
+        <a href="{% url 'shop_forgot_password' %}">Forgot password</a> <a href="registration/" style="color:red">Registration</a>
+        <br><br>
+    </form>
+{% endblock %}

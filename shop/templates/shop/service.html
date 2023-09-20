@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Service{% endblock %}
+
+{% block css_additional %}
+<link rel="stylesheet" href="{% static 'shop/css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class='service'><h3>Return a defective product</h3>
+    <p>If something’s gone wrong with an item you’ve bought, you might be entitled to a refund, repair or replacement.</p>
+    <p>Fill in the application form and attach a photo.</p>
+    <p>A member of our team will contact you as soon as possible.</p></div>
+    <form action="/service/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-style {% if field.errors %} errors {% endif %}">
+            {{form}}
+        </div>
+        <button type="submit">Send</button>
+    </form>
+{% endblock %}

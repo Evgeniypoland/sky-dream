@@ -1,0 +1,44 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load shop_tags %}
+
+{% block title %}Shopping cart{% endblock %}
+
+{% block css_additional %}
+<link rel="stylesheet" href="{% static 'shop/css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% if not profile_cart %}
+    <h3>Your shopping cart is empty at the moment</h3>
+    {% else %}
+    <h2>Shopping cart</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-style {% if field.errors %} errors {% endif %}">
+             <table>
+                 <tr>
+                     <th>Good</th>
+                     <th>Quantity</th>
+                     <th>Price</th>
+                     <th>Cost</th>
+                 </tr>
+                 {% for good in profile_cart %}
+                 <tr>
+                     <td>{{good.good}}</td>
+                     <td>{{good.quantity}}</td>
+                     <td>{{good.price}}{{good.currency}}</td>
+                     <td>{{good.cost}}{{good.currency}}</td>
+                 </tr>
+                {% endfor %}
+             </table>
+             <br>
+        Total: {{total}}{{profile_cart.first.currency}}
+        <a href="{% url 'shop_clear_cart' user.id %}"><button type="button">clear</button></a>
+            {{form}}
+             <br>
+        <button type="submit">order</button>
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}

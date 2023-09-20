@@ -1,0 +1,15 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Category{% endblock %}
+
+{% block content %}
+<h2>{{cat_name|upper}}</h2>
+<ul>
+    {% for good in category %}
+    <li><a href="{% url 'shop_good' cat_name good.slug %}">{{good.name}}</a></li> <br>
+    {% endfor %}
+</ul>
+{% include 'includes/sales.html' %}
+
+{% endblock %}
+

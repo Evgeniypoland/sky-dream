@@ -1,0 +1,40 @@
+{% load static %}
+{% load cache %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'shop/css/base.css' %}">
+    {% block css_additional %} {% endblock %}
+</head>
+
+<body>
+    <div class="header">
+        <h1><a href="{% url 'shop_index' %}">𝙎𝙆𝙔-𝘿𝙍𝙀𝘼𝙈</a></h1>
+        <div class="profile">
+            {% if request.user.is_authenticated %}
+            <span style="font-size: 20px">{{user.username}} | <a href="{% url 'shop_logout' %}">Exit</a> | </span>
+            <a href="{% url 'shop_cart' %}"><img src="/media/icons/cart.png" width="30" height="30"></a>
+            {% else %}
+            <a href="{% url 'shop_profile' %}"><img src="/media/icons/profile.png" width="30" height="30"></a>
+            <a href="{% url 'shop_cart' %}"><img src="/media/icons/cart.png" width="30" height="30"></a>
+            {% endif %}
+        </div>
+        <nav>
+            {% for category in catalog %}
+            <a href="{% url 'shop_category' category.slug  %}">{{category.name}}</a>
+            {% endfor %}
+        </nav>
+    </div>
+
+    <div class="center">{% block content %} {% endblock %}</div>
+
+    <div class='footer'>
+    <h4><a style="color:white" href="{% url 'shop_about_us' %}">About us</a>
+    <a style="color:white" href="{% url 'shop_service' %}">Service</a>
+    <a style="color:white" href="{% url 'shop_contact' %}">Contact</a></h4>
+    </div>
+</body>
+</html>

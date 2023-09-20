@@ -1,0 +1,23 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Sky-Dream{% endblock %}
+
+{% block content %}
+<div class="row">
+
+    <div class="leftcolumn">
+        <ul>
+            {% for category in catalog %}
+            <li><a href="{% url 'shop_category' category.slug  %}">{{category.name}}</a></li> <br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="rightcolumn">
+        <img src="{{picture.image.url}}" >
+    </div>
+</div>
+{% include 'includes/sales.html' %}
+
+{% endblock %}
+
