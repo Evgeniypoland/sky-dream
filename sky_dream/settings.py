@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+import secrets
 from pathlib import Path
 import dj_database_url
 
@@ -22,19 +23,34 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECRET_KEY = 'django-insecure-o$g@+^(13kk@w4lkn7-+$3i219@ciw+$v+%ka=m_pzg5d9*8vr'
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-o$g@+^(13kk@w4lkn7-+$3i219@ciw+$v+%ka=m_pzg5d9*8vr')
+# SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-o$g@+^(13kk@w4lkn7-+$3i219@ciw+$v+%ka=m_pzg5d9*8vr')
+
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    default=secrets.token_urlsafe(nbytes=64),
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-# DEBUG = True
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
+if not IS_HEROKU_APP:
+    DEBUG = True
 
-ALLOWED_HOSTS = ['sky-dream-b391b5c765a7.herokuapp.com', '127.0.0.1', 'localhost']
+# DEBUG = True
+# DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+
+# ALLOWED_HOSTS = ['sky-dream-b391b5c765a7.herokuapp.com', '127.0.0.1', 'localhost']
+
+if IS_HEROKU_APP:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -113,13 +129,24 @@ WSGI_APPLICATION = 'sky_dream.wsgi.application'
 
 # db_from_env = dj_database_url.config(conn_max_age=500)
 # DATABASES['default'].update(db_from_env)
-
-DATABASES = {
-        "default": dj_database_url.config(
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        ),
+if IS_HEROKU_APP:
+    DATABASES = {
+            "default": dj_database_url.config(
+                conn_max_age=600,
+                conn_health_checks=True,
+                ssl_require=True,
+            ),
+        }
+else:
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'sky',
+            'USER': 'postgres',
+            'PASSWORD': 'root',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
     }
 
 
@@ -157,7 +184,7 @@ USE_TZ = True
 
 # STATIC_URL = '/static/'
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
