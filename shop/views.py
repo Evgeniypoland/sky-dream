@@ -15,7 +15,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def Test(request):
-    return redirect('media/catalog/ATC4.jpg')
+    return HttpResponse(Categories.objects.get(id=1).name)
 
 class IndexView(DataMixin, ListView):
     template_name = 'shop/index.html'
