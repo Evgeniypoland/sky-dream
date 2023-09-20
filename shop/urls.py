@@ -1,6 +1,5 @@
 from django.urls import path
 from django.views.decorators.cache import cache_page
-
 from . import views
 
 urlpatterns = [
@@ -16,6 +15,6 @@ urlpatterns = [
     path('wrong/', views.IncorrectEmailView.as_view(), name='shop_wrong'),
     path('done/', views.DoneView.as_view(), name='shop_done'),
     path('clear_cart/<id>/', views.clear_cart, name='shop_clear_cart'),
-    path('<slug:category>/', cache_page(60)(views.CategoryGoodsView.as_view()), name='shop_category'),
-    path('<slug:category>/<slug:good>/', cache_page(60)(views.GoodInfoView.as_view()), name='shop_good'),
+    path('<slug:category>/', views.CategoryGoodsView.as_view(), name='shop_category'),
+    path('<slug:category>/<slug:good>/', views.GoodInfoView.as_view(), name='shop_good'),
 ]
