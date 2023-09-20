@@ -173,3 +173,4 @@ CACHES = {
         'LOCATION': BASE_DIR / 'sky_dream_cache',
     }
 }
+
