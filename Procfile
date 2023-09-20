@@ -1,1 +1,1 @@
-web: gunicorn sky_dream.wsgi --log-file
+web: gunicorn sky_dream.wsgi
