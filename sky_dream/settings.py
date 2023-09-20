@@ -107,6 +107,7 @@ DATABASES = {
         'USER': os.environ.get('POSTGRES_USER', 'fftfznaxwzskqc'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '41a776f17cf57980a39a08b332c7662ab6ef6d8f3d6aa02b0ccfa6d45d685db0'),
         'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+
     }
 }
 db_from_env = dj_database_url.config(conn_max_age=500)
