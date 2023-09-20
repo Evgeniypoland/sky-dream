@@ -3,19 +3,16 @@ from django.contrib.auth.views import LoginView
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 from .forms import *
-from django.views.generic.base import TemplateView, RedirectView
+from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView, CreateView
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from string import digits, ascii_lowercase, ascii_uppercase
 from random import choice
-from django.http import HttpResponse
 
 
 # Create your views here.
-def Test(request):
-    return HttpResponse(Categories.objects.get(id=1).name)
 
 class IndexView(DataMixin, ListView):
     template_name = 'shop/index.html'
