@@ -28,11 +28,10 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
 IS_HEROKU_APP = "DYNO" in os.environ and "CI" not in os.environ
-# if not IS_HEROKU_APP:
-#     DEBUG = True
+if not IS_HEROKU_APP:
+    DEBUG = True
 
 
 if IS_HEROKU_APP:
@@ -155,7 +154,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -175,5 +175,4 @@ CACHES = {
 }
 
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
