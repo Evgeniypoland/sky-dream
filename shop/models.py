@@ -53,7 +53,7 @@ class MainPageGallery(models.Model):
 class Sales(models.Model):
     name = models.OneToOneField(Goods, on_delete=models.CASCADE)
     new_price = models.IntegerField()
-    image = models.ImageField(upload_to='media/sales')
+    image = models.ImageField(upload_to='sales')
 
 
 class ShoppingCart(models.Model):
