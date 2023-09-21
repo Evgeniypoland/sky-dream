@@ -35,7 +35,6 @@ class RegistrationForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    captcha = CaptchaField()
 
     class Meta:
         widgets = {

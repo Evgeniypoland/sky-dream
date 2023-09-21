@@ -1,5 +1,6 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
+from django.core.mail import send_mail
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 from .forms import *
@@ -162,6 +163,10 @@ class ShoppingCartView(LoginRequiredMixin, DataMixin, FormView):
             OrderDetails.objects.create(order=order, user=user, good=good, quantity=quantity,
                                         price=price, cost=cost, total=total, currency=currency)
         clear_cart(self.request, user.id)
+        # send_mail('Заказ Оформлен',
+        #           'Войдите в админ панель, что бы просмотреть новый заказ.',
+        #           'pl01112022@gmail.com',
+        #           ['pl01112022@gmail.com'], fail_silently=False)
         return redirect('shop_done')
 
 
