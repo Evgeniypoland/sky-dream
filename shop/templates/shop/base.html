@@ -16,10 +16,10 @@
         <div class="profile">
             {% if request.user.is_authenticated %}
             <span style="font-size: 20px">{{user.username}} | <a href="{% url 'shop_logout' %}">Exit</a> | </span>
-            <a href="{% url 'shop_cart' %}"><img src="/media/icons/cart.png" width="30" height="30"></a>
+            <a href="{% url 'shop_cart' %}"><img src="{% static 'shop/img/icons/cart.png' %}" width="30" height="30"></a>
             {% else %}
-            <a href="{% url 'shop_profile' %}"><img src="/media/icons/profile.png" width="30" height="30"></a>
-            <a href="{% url 'shop_cart' %}"><img src="/media/icons/cart.png" width="30" height="30"></a>
+            <a href="{% url 'shop_profile' %}"><img src="{% static 'shop/img/icons/profile.png' %}" width="30" height="30"></a>
+            <a href="{% url 'shop_cart' %}"><img src="{% static 'shop/img/icons/cart.png' %}" width="30" height="30"></a>
             {% endif %}
         </div>
         <nav>

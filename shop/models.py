@@ -47,7 +47,7 @@ class Defects(models.Model):
 
 class MainPageGallery(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='static/main page gallery', null=True, blank=True)
+    image = models.ImageField(upload_to='main page gallery', null=True, blank=True)
 
 
 class Sales(models.Model):
