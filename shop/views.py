@@ -191,3 +191,5 @@ class ForgotPasswordView(FormView):
 
 class IncorrectEmailView(TemplateView):
     template_name = 'shop/incorrect_email.html'
+
+
