@@ -3,7 +3,7 @@
 <div class="row">
     {% for sale in sales %}
     <div class="sales">
-        <a href="{% url 'shop_good' 'sale' sale.name.slug %}"><img src="{% static sale.image.url %}" ></a>
+        <a href="{% url 'shop_good' 'sale' sale.name.slug %}"><img src="{% static sale.image %}" ></a>
     </div>
     {% endfor %}
 </div>
