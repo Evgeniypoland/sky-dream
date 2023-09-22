@@ -177,5 +177,4 @@ CACHES = {
     }
 }
 
-# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 
