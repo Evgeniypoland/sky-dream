@@ -154,11 +154,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "static"
-# STATICFILES_DIRS = [
-#     BASE_DIR / "media",
-# ]
+STATICFILES_DIRS = []
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -166,7 +164,7 @@ STATIC_ROOT = BASE_DIR / "static"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = ''
-MEDIA_ROOT = BASE_DIR
+MEDIA_ROOT = BASE_DIR / 'shop' / 'static'
 
 LOGIN_REDIRECT_URL = '/'
 

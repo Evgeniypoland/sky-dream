@@ -25,7 +25,7 @@ class Goods(models.Model):
     price = models.IntegerField(validators=[MinValueValidator(1)])
     currency = models.CharField(max_length=1, choices=CURRENCY_CHOICES, default='$')
     slug = models.SlugField(default='', db_index=True, null=False)
-    image = models.ImageField(upload_to='static/catalog', null=True, blank=True)
+    image = models.ImageField(upload_to='shop/img/catalog', null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -42,18 +42,18 @@ class Defects(models.Model):
     email = models.EmailField(max_length=100)
     phone = models.CharField(max_length=20)
     description = models.TextField()
-    photo = models.FileField(upload_to='static/uploads/defect_photos')
+    photo = models.FileField(upload_to='shop/img/defect_photos')
 
 
 class MainPageGallery(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='static/main page gallery', null=True, blank=True)
+    image = models.ImageField(upload_to='shop/img/main page gallery', null=True, blank=True)
 
 
 class Sales(models.Model):
     name = models.OneToOneField(Goods, on_delete=models.CASCADE)
     new_price = models.IntegerField()
-    image = models.ImageField(upload_to='static/sales')
+    image = models.ImageField(upload_to='shop/img/sales')
 
 
 class ShoppingCart(models.Model):
