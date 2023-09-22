@@ -47,13 +47,13 @@ class Defects(models.Model):
 
 class MainPageGallery(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='main page gallery', null=True, blank=True)
+    image = models.ImageField(upload_to='static/main page gallery', null=True, blank=True)
 
 
 class Sales(models.Model):
     name = models.OneToOneField(Goods, on_delete=models.CASCADE)
     new_price = models.IntegerField()
-    image = models.ImageField(upload_to='sales')
+    image = models.ImageField(upload_to='static/sales')
 
 
 class ShoppingCart(models.Model):
