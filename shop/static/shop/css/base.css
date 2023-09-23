@@ -14,12 +14,13 @@ body {
 }
 
 .center {
-    min-height: 53vh;
+    min-height: 100vh;
 }
 
 .footer {
   background: #657d7f;
   padding: 30px;
+
 }
 
 .sales {
