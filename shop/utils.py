@@ -10,4 +10,3 @@ class DataMixin:
         return context
 
 
-password_reset_text= 'You have received this mail because you have created a password reset request at sky-dream.com. Your new password: '

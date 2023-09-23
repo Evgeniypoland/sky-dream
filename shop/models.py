@@ -75,6 +75,9 @@ class Orders(models.Model):
     def __str__(self):
         return f'{self.id}'
 
+    def show_order(self):
+        return f'№ {self.id}, from: {self.user.username}, addres: {self.delivery_address}, phone: {self.phone} \n\n'
+
 
 class OrderDetails(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)
@@ -85,5 +88,9 @@ class OrderDetails(models.Model):
     cost = models.IntegerField()
     total = models.IntegerField()
     currency = models.CharField(max_length=1, default='$')
+
+    def show_orderdetails(self):
+        return f'{self.good.name}, {self.quantity} * {self.price} = {self.cost}{self.currency}'
+
 
 # python manage.py shell_plus --print-sql

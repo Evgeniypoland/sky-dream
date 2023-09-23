@@ -13,6 +13,9 @@ import os
 import secrets
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +35,6 @@ SECRET_KEY = os.environ.get(
 IS_HEROKU_APP = "DYNO" in os.environ and "CI" not in os.environ
 if not IS_HEROKU_APP:
     DEBUG = True
-
 
 if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["*"]
@@ -103,24 +105,23 @@ WSGI_APPLICATION = 'sky_dream.wsgi.application'
 
 if IS_HEROKU_APP:
     DATABASES = {
-            "default": dj_database_url.config(
-                conn_max_age=600,
-                conn_health_checks=True,
-                ssl_require=True,
-            ),
-        }
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
+    }
 else:
     DATABASES = {
         "default": {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'sky',
             'USER': 'postgres',
-            'PASSWORD': 'root',
+            'PASSWORD': os.environ.get("LOCAL_DATABASE_PASSWORD"),
             'HOST': 'localhost',
             'PORT': '5432',
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -177,4 +178,11 @@ CACHES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'djangomail2023@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 

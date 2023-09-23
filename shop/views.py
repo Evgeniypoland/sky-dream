@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
@@ -122,16 +123,25 @@ class ServiceView(DataMixin, CreateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class ContactView(DataMixin, CreateView):
+class ContactView(DataMixin, FormView):
     form_class = ContactForm
     template_name = 'shop/contact.html'
     success_url = '/done/'
-    model = Messages
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context()
         return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        form.save()
+        text = form.cleaned_data['message']
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        subject = 'Sky-Dream new message'
+        message = f'You have received a new message from {name}, email: {email}\n\n"{text}"'
+        send_email(subject, message)
+        return redirect('shop_done')
 
 
 class ShoppingCartView(LoginRequiredMixin, DataMixin, FormView):
@@ -163,6 +173,11 @@ class ShoppingCartView(LoginRequiredMixin, DataMixin, FormView):
             OrderDetails.objects.create(order=order, user=user, good=good, quantity=quantity,
                                         price=price, cost=cost, total=total, currency=currency)
         clear_cart(self.request, user.id)
+        order_goods = OrderDetails.objects.filter(order_id=order.id)
+        subject = f'Sky-Dream received a new order № {order.id} from {order.user.username}'
+        message = order.show_order() + '\n'.join(
+            elem.show_orderdetails() for elem in order_goods) + f'\n\ntotal: {total}'
+        send_email(subject, message)
         return redirect('shop_done')
 
 
@@ -186,7 +201,10 @@ class ForgotPasswordView(FormView):
             user = User.objects.get(email=email)
             user.set_password(new_password)
             user.save()
-            # send_to_email
+            subject = "New password at Sky-Dream"
+            message = f'You have received this mail because you have created a password reset request at https://sky-dream-b391b5c765a7.herokuapp.com \nYour new password: {new_password}'
+            recipient_list = [email]
+            send_email(subject, message, recipient_list)
         return redirect('shop_done')
 
 
@@ -194,3 +212,6 @@ class IncorrectEmailView(TemplateView):
     template_name = 'shop/incorrect_email.html'
 
 
+def send_email(subject, message, recipient_list=['pl01112022@gmail.com']):
+    email_from = settings.EMAIL_HOST_USER
+    send_mail(subject, message, email_from, recipient_list)
